@@ -1,0 +1,6 @@
+node_modules
+*.pyc
+server/client_secrets.json
+server/creds.pkl
+server/creds_collab.pkl
+server/__pycache__
