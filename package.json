@@ -17,6 +17,7 @@
     "rc-datepicker": "^5.0.10",
     "react": "^16.1.1",
     "react-c3js": "^0.1.20",
+    "react-dates": "^16.7.0",
     "react-dom": "^16.1.1",
     "react-form-validator-core": "^0.4.1",
     "react-handsontable": "^0.3.1",
