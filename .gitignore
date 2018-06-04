@@ -1,4 +1,6 @@
-node_modules
+node_modules/*
+!node_modules/react-c3js/
+node_modules/react-c3js/node_modules/
 *.pyc
 server/client_secrets.json
 server/creds.pkl
