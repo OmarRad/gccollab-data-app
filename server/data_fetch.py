@@ -95,32 +95,33 @@ def main(testing=False):
             group_guid = get_group_guid(url)
 
             # Query the database
-            group_members = gc.groups.get_group_members(group_guid)
+            group_members = gc.groups.get_group_members(group_guid, cleaned=False)
             group_name = gc.groups.name_from_guid(group_guid)
-
+ 
             # Get mungin'
             # Convert timjes to datetime objects
             group_members['time_created'] = group_members['time_created'].apply(lambda x: pd.to_datetime(x))
 
-            # Only keep entries within time selection TESTING
-            group_members = group_members[group_members['time_created'] > pd.to_datetime(start_time)]
-            group_members = group_members[group_members['time_created'] < pd.to_datetime(end_time)]
-
             group_members.set_index('time_created', inplace=True)
             
-            #code.interact(local=locals())
             group_members = group_members[group_members.index > pd.to_datetime('2000-01-01')]
 
             # Daily
             group_members_daily = group_members['user_name'].groupby(pd.TimeGrouper(freq='D')).count().cumsum()
             group_members_daily = group_members_daily.reset_index()
+            # Only keep current time selection
+            group_members_daily = group_members_daily[group_members_daily['time_created'] > pd.to_datetime(start_time)]
+            group_members_daily = group_members_daily[group_members_daily['time_created'] < pd.to_datetime(end_time)]
             group_members_daily['time_created'] = group_members_daily['time_created'].apply(lambda x: x.strftime('%Y%m%d'))
             
             # Monthly
             group_members_monthly = group_members['user_name'].groupby(pd.TimeGrouper(freq='M')).count().cumsum()
             group_members_monthly = group_members_monthly.reset_index()
+            # Only keep current time selection
+            group_members_monthly = group_members_monthly[group_members_monthly['time_created'] > pd.to_datetime(start_time)]
+            group_members_monthly = group_members_monthly[group_members_monthly['time_created'] < pd.to_datetime(end_time)]
             group_members_monthly['time_created'] = group_members_monthly['time_created'].apply(lambda x: x.strftime('%Y%m%d'))
-
+            
             send_obj = {
                 'monthly': {
                     'dates': group_members_monthly['time_created'].values.tolist(),
@@ -143,7 +144,7 @@ def main(testing=False):
             group_guid = get_group_guid(url)
 
             members = gc.groups.get_group_members(group_guid)
-            #code.interact(local=locals())
+            
             # The index used below could be any column, not important
             members = members.groupby('department').count().reset_index().set_index('time_created').sort_index(ascending=False).reset_index()
 
@@ -163,11 +164,6 @@ def main(testing=False):
 
             users = gc.users.get_all()
             users['time_created'] = users['time_created'].apply(lambda x: pd.to_datetime(x))
-
-            if metric == 2: # Active users (activity in last 60 days)
-                # THIS DOESN'T MAKE SENSE - REMOVE !!
-                users['last_action'] = users['last_action'].apply(lambda x: pd.to_datetime(x))
-                users = users[(pd.to_datetime('today') - users['last_action'] ) < pd.to_timedelta(60, unit='d') ]
 
             # Get monthly totals
             monthly = users.set_index('time_created').groupby(pd.TimeGrouper(freq='M')).count().cumsum().reset_index()[['time_created', 'email']]
