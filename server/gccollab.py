@@ -156,12 +156,13 @@ class users(object):  # Pulls in the entire users database
 
 class groups(object):
     # Warning: no_deps can cause duplicates on certain accounts
+    # Use cleaned=False when not looking for departments
     def get_group_members(guid, cleaned=True):
         if cleaned == True:
             statement_str = """SELECT t1.guid, t1.string AS department, t1.email, t1.last_login, t1.name AS user_name, t2.time_created FROM (SELECT DISTINCT(u.guid), ms.string, u.email, u.last_login, u.name FROM elggmetadata md
             INNER JOIN elggmetastrings ms ON md.value_id = ms.id
             INNER JOIN elggusers_entity u ON md.entity_guid = u.guid
-            WHERE md.name_id IN (14043,14046,14079)
+            WHERE md.name_id IN (14043,14046,14048,14047,14079,29630,8870,14439,29629,24785,29631)
             AND ms.string NOT LIKE '') t1
             INNER JOIN (SELECT * FROM elggentity_relationships r
             WHERE r.relationship = 'member'
@@ -171,7 +172,7 @@ class groups(object):
             statement_str = """SELECT t1.guid, t1.string AS department, t1.email, t1.last_login, t1.name AS user_name, t2.time_created FROM (SELECT DISTINCT(u.guid), ms.string, u.email, u.last_login, u.name FROM elggmetadata md
             INNER JOIN elggmetastrings ms ON md.value_id = ms.id
             INNER JOIN elggusers_entity u ON md.entity_guid = u.guid
-            WHERE md.name_id IN (14043,14046,14079)) t1
+            WHERE md.name_id IN (14043,14046,14048,14047,14079,29630,8870,14439,29629,24785,29631)) t1
             INNER JOIN (SELECT * FROM elggentity_relationships r
             WHERE r.relationship = 'member'
             AND r.guid_two = """ + str(guid) + """) t2

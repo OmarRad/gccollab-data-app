@@ -43,7 +43,6 @@ def convert_if_time(y):
 def close_tunnel():
     global server
     server.stop()
-    #print("ssh tunnel closed")
 
 def connect_to_database():
     global engine
@@ -72,21 +71,13 @@ def connect_to_database():
     db_connection = "mysql+pymysql://{}:{}@localhost:{}/{}".format(
         creds['username'], creds['password'], server.local_bind_port,creds['database'])
 
-    #print(db_connection)
-
     # Connection to db once inside is broken
     engine = sq.create_engine(db_connection)
-        
-    #print('CREATED ENGINE')
-    #engine = sq.create_engine(db_connection, encoding='latin1', echo=False)
-
     conn = {}
     try:
         conn = engine.connect()
-        #print('CONNECTED ON ENGINE')
     except:
         server.stop()
-        #print('failed to connect')
 
     return engine, conn
 
@@ -170,7 +161,7 @@ class groups(object):
             statement_str = """SELECT t1.guid, t1.string AS department, t1.email, t1.last_login, t1.name AS user_name, t2.time_created FROM (SELECT DISTINCT(u.guid), ms.string, u.email, u.last_login, u.name FROM elggmetadata md
             INNER JOIN elggmetastrings ms ON md.value_id = ms.id
             INNER JOIN elggusers_entity u ON md.entity_guid = u.guid
-            WHERE md.name_id IN (14043,14046,14079)
+            WHERE md.name_id IN (14043,14046,14048,14047,14079,29630,8870,14439,29629,24785,29631)
             AND ms.string NOT LIKE '') t1
             INNER JOIN (SELECT * FROM elggentity_relationships r
             WHERE r.relationship = 'member'
