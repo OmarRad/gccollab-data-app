@@ -74,8 +74,6 @@ class LineChart2 extends Component {
             var endDate = this.props.endDate.format("YYYY-MM-DD");
             var groupURL = this.props.groupURL;
         }
-        console.log('SDGSARGHASH');
-        console.log(groupURL)
         // Construct JSON object to represent request
         let state = JSON.parse('{"stepIndex":4,"reqType":{"category":1,"filter":"'+ groupURL +'"},"metric":1,"metric2":0,"time":{"startDate":"' + startDate +'","endDate":"' + endDate +'","allTime":true},"errorFlag":false}');
         // 'previous state' issue is coming from here. It's reading the old prop value
@@ -194,11 +192,9 @@ class LineChart2 extends Component {
         let scrollTable = '';
         if (this.state.data.columns.length > 0) {
             if (this.state.data.columns[0].length > 20) {
-                console.log('oversize table detected.')
                 scrollTable = ' scrollTable';
             }
         }
-        //console.log(this.state.contentClass + scrollTable);
         return (
             <Segment className="ind-content-box" style={{marginTop: '10px', padding: '0 0', display: 'inline-block', width: '98%', borderRadius: '5px', backgroundColor: '#f9f9f9', border: '2px solid lightgray'}}>
                 <table className="content-box-heading" style={{width: '100%'}}>

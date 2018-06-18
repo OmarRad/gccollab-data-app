@@ -12,7 +12,6 @@ class ContentBox extends Component {
     /* Call each time step changes. Inserts correct component accordingly*/
     constructor(props) {
         super(props)
-        //console.log(props.currBox);
         this.state = {
             boxMapping : [
                 WelcomeBox,

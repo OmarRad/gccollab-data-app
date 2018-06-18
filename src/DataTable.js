@@ -23,7 +23,6 @@ class DataTable extends Component {
             height = sz.height;
             overflow = 'auto';
         }
-        console.log('height i8s ' + height);
         return (
             <div style={{width: '500px', overflow: 'auto', height:'200px', float: 'right'}}> 
                 <HotTable

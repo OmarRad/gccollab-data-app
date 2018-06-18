@@ -27,8 +27,6 @@ class Content extends Component {
     }
 
     render() {
-        console.log('CONTROL.JS')
-        console.log(this.props.setMainState)
         return (
             <div style={{height: '50px', width: '95%', margin: '0 auto', marginBottom: '5px', marginTop: '10px'}}>
                 <div style={{float: 'left', display: 'inline', width: '410px', paddingTop: '5px', verticalAlign: 'middle'}}>
@@ -66,7 +64,6 @@ class Content extends Component {
                 </div>
                 <Input action={ <Button content='Get stats'
                     onClick={ (event, data) => { 
-                        console.log('CONTROOOL button');
                         this.props.setGroupUrl(this.state.currUrl);
                      } } />}
                     placeholder='Paste group URL here...'

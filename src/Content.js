@@ -19,9 +19,6 @@ class Content extends Component {
         this.state = {}
     }
     render() {
-        console.log(this.props.endDate);
-        console.log('TESTIBNG IN CONTENT');
-        console.log(this.props.groupURL);
         return (
             <div style={{margin: '0 auto', backgroundColor: '#fff', border: '2px solid lightgray', borderRadius: '5px', width: '95%'}}>
                 <div className="pageviews" style={{width: '100%'}}>

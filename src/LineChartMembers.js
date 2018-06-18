@@ -57,14 +57,6 @@ class LineChartMembers extends Component {
     }
 
     requestData = (nextProps=null) => {
-        console.log('REQUESTDATA BEGIN SHOW GROUP URL');
-        console.log(this.props.groupURL);
-        try {
-            console.log(nextProps.groupURL);
-        } catch (e) {
-            console.log('eh')
-        }
-        
         // Turn on the loading indicator
         this.setState({loaderClass: ''});
         // Account for both first and n use of the function
@@ -82,8 +74,6 @@ class LineChartMembers extends Component {
         state.time.startDate = moment(state.time.startDate).format('YYYY-MM-DD');
         state.time.endDate = moment(state.time.endDate).format('YYYY-MM-DD');
 
-        console.log('TESTING OUTBOUND OBJECT');
-        console.log(state);
         fetch('/getData/request', {
             method: 'POST',
             headers: {
@@ -116,14 +106,11 @@ class LineChartMembers extends Component {
     }
     
     componentWillReceiveProps(nextProps) {
-        console.log('NEXTPROPS FROM LINECHARTMEMBERS');
-        console.log(nextProps);
         this.requestData(nextProps);
     }
     componentDidMount() {
         // Turn on the loading indicator
         this.setState({loaderClass: '', contentClass:'hidden'});
-        //this.requestData();
     }
 
     handleIntervalChange = (event, index, value) => {
@@ -197,11 +184,9 @@ class LineChartMembers extends Component {
         let scrollTable = '';
         if (this.state.data.columns.length > 0) {
             if (this.state.data.columns[0].length > 20) {
-                console.log('oversize table detected.')
                 scrollTable = ' scrollTable';
             }
         }
-        console.log(this.state.contentClass + scrollTable);
         return (
             <Segment className="ind-content-box" style={{marginTop: '10px', padding: '0 0', display: 'inline-block', width: '98%', align: 'center', borderRadius: '5px', backgroundColor: '#f9f9f9', border: '2px solid lightgray'}}>
                 <table style={{width: '100%'}}>
