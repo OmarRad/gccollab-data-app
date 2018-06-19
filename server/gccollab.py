@@ -169,10 +169,8 @@ class groups(object):
             AND r.guid_two =""" + str(guid) + """ ) t2
             ON t1.guid = t2.guid_one"""
         else:
-            statement_str = """SELECT t1.guid, t1.string AS department, t1.email, t1.last_login, t1.name AS user_name, t2.time_created FROM (SELECT DISTINCT(u.guid), ms.string, u.email, u.last_login, u.name FROM elggmetadata md
-            INNER JOIN elggmetastrings ms ON md.value_id = ms.id
-            INNER JOIN elggusers_entity u ON md.entity_guid = u.guid
-            WHERE md.name_id IN (14043,14046,14048,14047,14079,29630,8870,14439,29629,24785,29631)) t1
+            statement_str = """SELECT t1.guid, t1.email, t1.last_login, t1.name AS user_name, t2.time_created FROM (SELECT DISTINCT(u.guid), u.email, u.last_login, u.name FROM elggmetadata md
+            INNER JOIN elggusers_entity u ON md.entity_guid = u.guid) t1
             INNER JOIN (SELECT * FROM elggentity_relationships r
             WHERE r.relationship = 'member'
             AND r.guid_two = """ + str(guid) + """) t2
