@@ -110,16 +110,30 @@ def main(testing=False):
             group_members_daily = group_members['user_name'].groupby(pd.TimeGrouper(freq='D')).count().cumsum()
             group_members_daily = group_members_daily.reset_index()
             # Only keep current time selection
-            group_members_daily = group_members_daily[group_members_daily['time_created'] > pd.to_datetime(start_time)]
-            group_members_daily = group_members_daily[group_members_daily['time_created'] < pd.to_datetime(end_time)]
+            group_members_daily = group_members_daily[group_members_daily['time_created'] >= pd.to_datetime(start_time)]
+            group_members_daily = group_members_daily[group_members_daily['time_created'] <= pd.to_datetime(end_time)]
+
+            # If the requested start date predates the oldest time on the dataframe, pad with 0s
+            if min(group_members_daily['time_created']) > pd.to_datetime(start_time):
+                ix = pd.DatetimeIndex(start=pd.to_datetime(start_time), end=max(group_members_daily['time_created']), freq='D')
+                group_members_daily = group_members_daily.set_index('time_created').reindex(ix, fill_value=0).reset_index()
+                group_members_daily.rename(columns={'index': 'time_created'}, inplace=True)
+
             group_members_daily['time_created'] = group_members_daily['time_created'].apply(lambda x: x.strftime('%Y%m%d'))
             
             # Monthly
             group_members_monthly = group_members['user_name'].groupby(pd.TimeGrouper(freq='M')).count().cumsum()
             group_members_monthly = group_members_monthly.reset_index()
             # Only keep current time selection
-            group_members_monthly = group_members_monthly[group_members_monthly['time_created'] > pd.to_datetime(start_time)]
-            group_members_monthly = group_members_monthly[group_members_monthly['time_created'] < pd.to_datetime(end_time)]
+            group_members_monthly = group_members_monthly[group_members_monthly['time_created'] >= pd.to_datetime(start_time)]
+            group_members_monthly = group_members_monthly[group_members_monthly['time_created'] <= pd.to_datetime(end_time)]
+
+            # (monthly) If the requested start date predates the oldest time on the dataframe, pad with 0s
+            if min(group_members_monthly['time_created']) > pd.to_datetime(start_time):
+                ix = pd.DatetimeIndex(start=pd.to_datetime(start_time), end=max(group_members_monthly['time_created']), freq='M')
+                group_members_monthly = group_members_monthly.set_index('time_created').reindex(ix, fill_value=0).reset_index()
+                group_members_monthly.rename(columns={'index': 'time_created'}, inplace=True)
+
             group_members_monthly['time_created'] = group_members_monthly['time_created'].apply(lambda x: x.strftime('%Y%m%d'))
             
             send_obj = {
