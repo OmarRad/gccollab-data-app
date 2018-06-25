@@ -2,7 +2,7 @@ node_modules/*
 !node_modules/react-c3js/
 node_modules/react-c3js/node_modules/
 *.pyc
-server/client_secrets.json
-server/creds.pkl
-server/creds_collab.pkl
-server/__pycache__
+client_secrets.json
+creds.pkl
+creds_collab.pkl
+__pycache__

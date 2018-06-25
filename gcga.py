@@ -15,9 +15,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 # For munging data retrieved from API
 import pandas as pd
 import code
-import matplotlib
-import matplotlib.pyplot as plt
-import seaborn as sns
 from numpy import sum
 
 
