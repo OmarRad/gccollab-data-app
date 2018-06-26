@@ -57,10 +57,13 @@ class LineChartMembers extends Component {
     }
 
     requestData = (nextProps=null) => {
+        
         // Turn on the loading indicator
         this.setState({loaderClass: ''});
         // Account for both first and n use of the function
         if (nextProps) {
+            // Do not send request if no query is present
+            if (nextProps.groupURL == '') return;
             var startDate = nextProps.startDate.format("YYYY-MM-DD");
             var endDate = nextProps.endDate.format("YYYY-MM-DD");
             var groupURL = nextProps.groupURL;

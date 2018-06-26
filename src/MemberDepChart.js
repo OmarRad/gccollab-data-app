@@ -74,8 +74,11 @@ class MemberDepChart extends Component {
     }
     
     requestData = (nextProps = null) => {
+        
         this.setState({loaderClass: ''});
         if (nextProps) {
+            // Do not send request if no query is present
+            if (nextProps.groupURL == '') return;
             var startDate = nextProps.startDate.format("YYYY-MM-DD");
             var endDate = nextProps.endDate.format("YYYY-MM-DD");
             var groupURL = nextProps.groupURL;

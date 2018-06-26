@@ -46,7 +46,7 @@ class App extends Component {
       // Populate this with stuff from control
       startDate: m1,
       endDate: m2,
-      groupURL: 'https://gccollab.ca/groups/profile/85014/the-policy-community-la-communaute-des-politiques',
+      groupURL: '',
       onIntro: true
     }
   }
