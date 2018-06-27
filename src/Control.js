@@ -17,7 +17,8 @@ class Control extends Component {
         // This should instead be passed down from props
         const date1 = new Date();
         const date2 = new Date();
-        date1.setFullYear(date1.getFullYear() - 1);
+        //date1.setFullYear(date1.getFullYear() - 1);
+        date1.setDate(date1.getDate() - 90);
         this.state = {
             startDate: null,
             endDate: null,

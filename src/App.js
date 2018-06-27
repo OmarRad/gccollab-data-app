@@ -34,7 +34,8 @@ class App extends Component {
     // Create temporary time objects
     const date1 = new Date();
     const date2 = new Date();
-    date1.setFullYear(date1.getFullYear() - 1);
+    //date1.setFullYear(date1.getFullYear() - 1);
+    date1.setDate(date1.getDate() - 90);
     let m1 = moment(date1);
     let m2 = moment(date2);
     // Bind the state setter
