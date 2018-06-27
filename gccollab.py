@@ -648,6 +648,14 @@ class content(object):
         #code.interact(local=locals())
         top_content = top_content[['guid']]
         return top_content
+    
+    def content_ga_query(group_guid):
+        guid_df = get_top_content(group_guid)
+        regex_str = ''
+        l = content.values.astype(str).tolist()
+        for i in range(len(l)):
+            regex_str = regex_str + (l[i][0] + '|')
+        return regex_str
 
     def get_blogs(tags=False):
 
