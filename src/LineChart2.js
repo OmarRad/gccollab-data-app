@@ -226,6 +226,8 @@ class LineChart2 extends Component {
                         axis={this.state.axis}
                         size={sz}
                         unloadBeforeLoad={true}
+                        point={{show: false}}
+                        zoom={{enabled: true}}
                     />
                 </div>
                 <DataTable

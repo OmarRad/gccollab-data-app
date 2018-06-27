@@ -39,7 +39,7 @@ class LineChartMembers extends Component {
                     }
                 }
             },
-            interval: 'monthly',
+            interval: 'daily',
             dataBackup: {
                 // This is only here to prevent errors from changing interval before data is loaded
                 monthly: {
@@ -218,6 +218,8 @@ class LineChartMembers extends Component {
                         axis={this.state.axis}
                         size={sz}
                         unloadBeforeLoad={true}
+                        zoom={{enabled: true}}
+                        point={{show: false}}
                     />
                 </div>
                 <DataTable
