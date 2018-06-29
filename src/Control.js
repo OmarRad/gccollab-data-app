@@ -25,7 +25,8 @@ class Control extends Component {
             focusedInput: null,
             currUrl: '',
             validURL: false,
-            showError: false
+            showError: false,
+            errorMessage: "URLs should be of the format https://gcollab.ca/groups/profile..."
         }
     }
 
@@ -37,6 +38,28 @@ class Control extends Component {
             return false;
     }
 
+    URLErrorMessage = (url) => {
+        if ((url.indexOf('https://gccollab.ca/') === 0) && !this.URLIsValid(url) ) {
+            // URL is from collab, but not a group's main page.
+            // In the future relevant stats will be served for whatever content is requested.
+            // Right now, provide an error + explanation
+            return "This tool currently only supports group stats. Enter a group's main page URL (https://gcollab.gc.ca/groups/profile...)"
+        } else if (url.indexOf('https://gcconnex') === 0) {
+            return "This tool is currently only available for GCcollab groups."
+        } else {
+            return "URLs should be of the format https://gcollab.ca/groups/profile...";
+        }
+    }
+
+    checkUserInput = (url) => {
+        if (this.URLIsValid(url)) {
+            this.setState({ currUrl: this.cleanURL(url), validURL: true, showError: false })
+        } else {
+            // URL is invalid in some way. Generate an error message
+            this.setState({validURL: false, showError: true, errorMessage: this.URLErrorMessage(url)})
+        }
+    }
+
     // Removes query string from URLs
     // Still needed: account for accent characters
     cleanURL = (url) => {
@@ -46,7 +69,7 @@ class Control extends Component {
     }
 
     render() {
-        var popupStyle = {
+        let popupStyle = {
             opacity: this.state.validURL ? "0" : "1"
         }
         return (
@@ -97,7 +120,7 @@ class Control extends Component {
                                     this.props.setGroupUrl(this.state.currUrl);
                                 }
                         }} />
-                    } content="URLs should be of the format https://gcollab.gc.ca/groups/profile..." 
+                    } content={this.state.errorMessage} 
                     style={popupStyle} />
                 }
                     placeholder='Paste group URL here...'
@@ -105,12 +128,7 @@ class Control extends Component {
                     error={this.state.showError}
                     onChange={(event, data) => {
                         // Need to check if URL provided is valid
-
-                        if (this.URLIsValid(data.value)) {
-                            this.setState({ currUrl: this.cleanURL(data.value), validURL: true, showError: false })
-                        } else {
-                            this.setState({validURL: false, showError: true})
-                        }
+                        this.checkUserInput(data.value);
                     }}
                 />
             </div>
